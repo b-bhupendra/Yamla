@@ -1,0 +1,6 @@
+{
+  "name": "Fake iOS Call Simulator",
+  "description": "A web-based iOS calling simulator that receives fake incoming calls at a customizable interval with realistic UI.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
