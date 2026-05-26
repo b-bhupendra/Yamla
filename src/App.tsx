@@ -33,7 +33,7 @@ export default function App() {
   const handleBackToSettings = () => setAppState('settings');
 
   return (
-    <div className="w-full h-screen bg-black overflow-hidden font-sans">
+    <div className="w-full min-h-screen bg-black overflow-hidden font-sans">
       {appState === 'settings' && (
         <Settings 
           settings={settings} 
@@ -55,6 +55,9 @@ export default function App() {
             <h2 className="text-2xl font-medium tracking-tight">Simulator is active</h2>
             <p className="text-gray-400">
               Waiting {settings.delaySeconds} seconds before incoming call...
+            </p>
+            <p className="text-xs text-gray-500 mt-2">
+              Note: Sound & Vibration require you to interact closely with the page.
             </p>
             <div className="mt-8 flex justify-center">
               <div className="w-8 h-8 border-2 border-dashed border-gray-400 rounded-full animate-spin"></div>

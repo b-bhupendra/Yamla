@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Phone, MessageSquare, Clock } from 'lucide-react';
 import { motion } from 'motion/react';
 import { CallerSettings } from '../types';
+import { RingtonePlayer } from '../audio';
 
 interface IncomingCallProps {
   settings: CallerSettings;
@@ -10,6 +11,21 @@ interface IncomingCallProps {
 }
 
 export function IncomingCall({ settings, onAccept, onDecline }: IncomingCallProps) {
+  const playerRef = useRef<RingtonePlayer | null>(null);
+
+  useEffect(() => {
+    // Start ringtone and vibration
+    playerRef.current = new RingtonePlayer();
+    playerRef.current.start();
+
+    return () => {
+      // Cleanup on unmount (accept/decline)
+      if (playerRef.current) {
+        playerRef.current.stop();
+      }
+    };
+  }, []);
+
   return (
     <div className="relative w-full h-full min-h-screen bg-black overflow-hidden flex flex-col justify-between items-center pb-12">
       {/* Background Media */}
