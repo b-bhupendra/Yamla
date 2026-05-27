@@ -46,7 +46,7 @@ export function ActiveCall({ settings, onEndCall }: ActiveCallProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-full min-h-screen bg-black overflow-hidden flex flex-col justify-between items-center pb-10">
+    <div className="relative w-full h-[100dvh] bg-black overflow-hidden flex flex-col justify-between items-center pb-10">
       
       {/* Proximity Sensor Trigger (Top 25% of Screen) */}
       <div 
@@ -79,7 +79,7 @@ export function ActiveCall({ settings, onEndCall }: ActiveCallProps) {
           style={{ backgroundImage: `url(${settings.image})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[#1c1c1e] pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-black pointer-events-none z-0" />
       )}
 
       {/* Dark gradient so controls are readable */}

@@ -26,14 +26,37 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [appState, settings.delaySeconds]);
 
-  const handleStart = () => setAppState('idle');
+  const handleStart = async () => {
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      } else if ((document.documentElement as any).webkitRequestFullscreen) {
+        await (document.documentElement as any).webkitRequestFullscreen();
+      }
+    } catch (err) {
+      console.warn("Fullscreen failed:", err);
+    }
+    setAppState('idle');
+  };
+
   const handleAccept = () => setAppState('active');
   const handleDecline = () => setAppState('idle');
   const handleEndCall = () => setAppState('idle');
-  const handleBackToSettings = () => setAppState('settings');
+  const handleBackToSettings = () => {
+    try {
+      if (document.exitFullscreen && document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen && (document as any).webkitFullscreenElement) {
+        (document as any).webkitExitFullscreen();
+      }
+    } catch (err) {
+      // ignore
+    }
+    setAppState('settings');
+  };
 
   return (
-    <div className="w-full min-h-screen bg-black overflow-hidden font-sans">
+    <div className="w-full h-[100dvh] bg-black overflow-hidden font-sans select-none pb-[safe-area-inset-bottom]">
       {appState === 'settings' && (
         <Settings 
           settings={settings} 
@@ -43,7 +66,7 @@ export default function App() {
       )}
       
       {appState === 'idle' && (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900 text-white p-6 relative">
+        <div className="flex flex-col items-center justify-center h-full bg-black text-white p-6 relative">
           <button 
             onClick={handleBackToSettings}
             className="absolute top-8 left-8 text-sm text-blue-400 hover:text-blue-300 font-medium"
